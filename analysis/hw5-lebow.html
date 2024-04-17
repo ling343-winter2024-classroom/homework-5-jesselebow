@@ -1,0 +1,1146 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.450">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Jesse LeBow">
+
+<title>Homework 5</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="hw5-lebow_files/libs/clipboard/clipboard.min.js"></script>
+<script src="hw5-lebow_files/libs/quarto-html/quarto.js"></script>
+<script src="hw5-lebow_files/libs/quarto-html/popper.min.js"></script>
+<script src="hw5-lebow_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="hw5-lebow_files/libs/quarto-html/anchor.min.js"></script>
+<link href="hw5-lebow_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="hw5-lebow_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="hw5-lebow_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="hw5-lebow_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="hw5-lebow_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+
+
+</head>
+
+<body class="fullcontent">
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Homework 5</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Jesse LeBow </p>
+          </div>
+  </div>
+    
+  
+    
+  </div>
+  
+
+</header>
+
+<section id="homework-5" class="level1">
+<h1>Homework 5</h1>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">#install.packages("gt")</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gt)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(here)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(knitr)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<section id="prediction-in-the-maze" class="level2">
+<h2 class="anchored" data-anchor-id="prediction-in-the-maze">Prediction in the Maze</h2>
+<p>This study explores the role of prediction in language comprehension.</p>
+<p>Even intuitively, we can realize that prediction is natural to understanding of written in spoken language in some form – it’s the reason we’re able to anticipate how a sentence will end, perhaps leading us to interject or tune out before an utterance has finished.</p>
+<p>One way prediction has been tested in the past is through the alternating use of high-cloze and unexpected nouns in constrained sentences. High-cloze nouns associated with either indefinite article (a/an) were contrasted with unexpected nouns associated with the other article; so, in a sentence like “The man rode ___“, the nouns might be”a bicycle” (high-cloze) and “an elephant” (unexpected). Reaction times and correctness scores are then measured and compared.</p>
+<p>To measure this, an A-maze task was conducted using article-noun pairings like the one above. In an A-maze task, participants select one word from pairs until the sentence is complete. These pairs are composed of a target and a distractor word. A distractor word is one which could not logically fit into a given sentence. So, if the goal were to make the sentence “The man rode a bicycle,” then the third word pairing might be [rode/pepper]. Each time a word is chosen, the next pair of words is shown. Eventually, one of these word pairs contains an indefinite article. The hypothesis is that, if the article corresponds to a noun that would be expected to follow (“[ride] a bicycle”), the participant will tend to answer correctly more often, and with less delay, than in the alternative case (“[ride] an elephant”). This would then suggest that prediction is aiding the comprehension and completion of these sentences.</p>
+</section>
+<section id="importing-data" class="level2">
+<h2 class="anchored" data-anchor-id="importing-data">Importing Data</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>here<span class="sc">::</span><span class="fu">i_am</span>(<span class="st">"analysis/hw5-lebow.qmd"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>here() starts at C:/Users/jesse/Documents/GitHub/homework-5-jesselebow</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>d <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="fu">here</span>(<span class="st">"data/delong maze 40Ss.csv"</span>), </span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>              <span class="at">header =</span> <span class="dv">0</span>, <span class="at">sep =</span> <span class="st">","</span>, <span class="at">comment.char =</span> <span class="st">"#"</span>, <span class="at">strip.white =</span> T,</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>              <span class="at">col.names =</span> <span class="fu">c</span>(<span class="st">"Index"</span>,<span class="st">"Time"</span>,<span class="st">"Counter"</span>,<span class="st">"Hash"</span>,<span class="st">"Owner"</span>,<span class="st">"Controller"</span>,<span class="st">"Item"</span>,<span class="st">"Element"</span>,<span class="st">"Type"</span>,<span class="st">"Group"</span>,<span class="st">"FieldName"</span>,<span class="st">"Value"</span>,<span class="st">"WordNum"</span>,<span class="st">"Word"</span>,<span class="st">"Alt"</span>,<span class="st">"WordOn"</span>,<span class="st">"CorrWord"</span>,<span class="st">"RT"</span>,<span class="st">"Sent"</span>,<span class="st">"TotalTime"</span>,<span class="st">"Question"</span>,<span class="st">"Resp"</span>,<span class="st">"Acc"</span>,<span class="st">"RespRT"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>These are the column names, in order, and what they represent:</p>
+<p>Index - Participant number. Time - When the assessment began. Counter - (I’m not sure) Hash - A hashed version of the participant’s IP address. Owner - Whether the participant was logged in as the study owner at the time (false for all participants). Controller - The kind of assessment in that row. Either form (entry survey), Maze (the task itself), or Question (about the task). Item - Corresponds to a specific task, including the intro survey, practice questions, and each individual assessment for the maze tasks. Element - Everything but question is 0, and question is 1. Type - the type of assessment. Can be intro, practice, or code corresponding to a specific task. Group - Group that the individual task belongs to. FieldName - Only for the self-questionnaire at the start. Value - Answers to the questionnaire questions. WordNum - Number of the word as part of a sequence in the word-pair discrimination portion. Word - The actual word. Alt - The corresponding distractor word. WordOn - Which side (left = 0, right = 1) the correct word is on. CorrWord - Whether the participant got it correct the first time. RT - Time (ms) from reading until the first answer (correct or not). Sent - The full sentence from the individual task. TotalTime - Time (ms) to correct word, including initial incorrect responses. Question - Comprehension question for the sentence. Resp - The answer given to the prior question. Acc - 1 if the answer was correct, 0 if not; N/A if not a question row RespRT - Time taken (ms) to answer the question.</p>
+<p>The total number of participants is 40.</p>
+</section>
+<section id="removal-of-data" class="level2">
+<h2 class="anchored" data-anchor-id="removal-of-data">Removal of data</h2>
+<p>Item #29 was removed due to a coding error, and words with error responses were removed as well:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>demo <span class="ot">&lt;-</span> d[d<span class="sc">$</span>Controller <span class="sc">==</span> <span class="st">"Form"</span>,<span class="dv">1</span><span class="sc">:</span><span class="dv">12</span>]</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(demo) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Subject"</span>,<span class="st">"MD5"</span>,<span class="st">"TrialType"</span>,<span class="st">"Number"</span>,<span class="st">"Element"</span>,<span class="st">"Experiment"</span>,<span class="st">"Item"</span>,<span class="st">"Field"</span>,<span class="st">"Response"</span>,<span class="st">"X"</span>,<span class="st">"field"</span>,<span class="st">"resp"</span>)</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>demo <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(<span class="fu">lapply</span>(demo, <span class="cf">function</span> (x) <span class="cf">if</span> (<span class="fu">is.factor</span>(x) <span class="sc">|</span> <span class="fu">is.character</span>(x)) <span class="fu">factor</span>(x) <span class="cf">else</span> x)) </span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>resp <span class="ot">&lt;-</span> d[d<span class="sc">$</span>Controller <span class="sc">==</span> <span class="st">"Question"</span> <span class="sc">&amp;</span> <span class="fu">substr</span>(d<span class="sc">$</span>Type,<span class="dv">1</span>,<span class="dv">4</span>) <span class="sc">!=</span> <span class="st">"prac"</span>, <span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>,<span class="dv">21</span><span class="sc">:</span><span class="dv">24</span>)]</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>resp <span class="ot">&lt;-</span> <span class="fu">separate</span>(<span class="at">data =</span> resp, <span class="at">col =</span> Type, <span class="at">into =</span> <span class="fu">c</span>(<span class="st">"exp"</span>, <span class="st">"item"</span>, <span class="st">"expect"</span>, <span class="st">"position"</span>, <span class="st">"pos"</span>, <span class="st">"cloze"</span>, <span class="st">"art.cloze"</span>, <span class="st">"n.cloze"</span>), <span class="at">sep =</span> <span class="st">"</span><span class="sc">\\</span><span class="st">."</span>, <span class="at">convert =</span> <span class="cn">TRUE</span>, <span class="at">fill =</span> <span class="st">"right"</span>)</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>resp <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(<span class="fu">lapply</span>(resp, <span class="cf">function</span> (x) <span class="cf">if</span> (<span class="fu">is.factor</span>(x) <span class="sc">|</span> <span class="fu">is.character</span>(x)) <span class="fu">factor</span>(x) <span class="cf">else</span> x))</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>resp<span class="sc">$</span>Acc <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(<span class="fu">as.character</span>(resp<span class="sc">$</span>Acc))</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>resp<span class="sc">$</span>RespRT <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(<span class="fu">as.character</span>(resp<span class="sc">$</span>RespRT))</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>rt <span class="ot">&lt;-</span> d[d<span class="sc">$</span>Controller <span class="sc">==</span> <span class="st">"Maze"</span> <span class="sc">&amp;</span> <span class="fu">substr</span>(d<span class="sc">$</span>Type,<span class="dv">1</span>,<span class="dv">4</span>) <span class="sc">!=</span> <span class="st">"prac"</span>, <span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>,<span class="dv">13</span><span class="sc">:</span><span class="dv">20</span>)]</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>rt <span class="ot">&lt;-</span> <span class="fu">separate</span>(<span class="at">data =</span> rt, <span class="at">col =</span> Type, <span class="at">into =</span> <span class="fu">c</span>(<span class="st">"exp"</span>, <span class="st">"item"</span>, <span class="st">"expect"</span>, <span class="st">"position"</span>, <span class="st">"pos"</span>, <span class="st">"cloze"</span>, <span class="st">"art.cloze"</span>, <span class="st">"n.cloze"</span>), <span class="at">sep =</span> <span class="st">"</span><span class="sc">\\</span><span class="st">."</span>, <span class="at">convert =</span> <span class="cn">TRUE</span>, <span class="at">fill =</span> <span class="st">"right"</span>)</span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>rt <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(<span class="fu">lapply</span>(rt, <span class="cf">function</span> (x) <span class="cf">if</span> (<span class="fu">is.factor</span>(x) <span class="sc">|</span> <span class="fu">is.character</span>(x)) <span class="fu">factor</span>(x) <span class="cf">else</span> x))</span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>rt<span class="sc">$</span>WordNum <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(<span class="fu">as.character</span>(rt<span class="sc">$</span>WordNum))</span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>rt<span class="sc">$</span>RT <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(<span class="fu">as.character</span>(rt<span class="sc">$</span>RT))</span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>rt<span class="sc">$</span>TotalTime <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(<span class="fu">as.character</span>(rt<span class="sc">$</span>TotalTime))</span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>rt<span class="sc">$</span>Acc <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(<span class="fu">as.character</span>(<span class="fu">recode</span>(rt<span class="sc">$</span>CorrWord, <span class="at">yes =</span> <span class="st">"1"</span>, <span class="at">no =</span> <span class="st">"0"</span>)))</span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>rt<span class="sc">$</span>n.cloze.scale <span class="ot">&lt;-</span> <span class="fu">scale</span>(rt<span class="sc">$</span>n.cloze)</span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>rt<span class="sc">$</span>art.cloze.scale <span class="ot">&lt;-</span> <span class="fu">scale</span>(rt<span class="sc">$</span>art.cloze)</span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a><span class="co"># Removing item 29 due to incorrect noun pairing</span></span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a>resp <span class="ot">&lt;-</span> resp[resp<span class="sc">$</span>item <span class="sc">!=</span> <span class="dv">29</span>,]</span>
+<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a>rt <span class="ot">&lt;-</span> rt[rt<span class="sc">$</span>item <span class="sc">!=</span> <span class="dv">29</span>,]</span>
+<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a>rt.s <span class="ot">&lt;-</span> rt[rt<span class="sc">$</span>Hash <span class="sc">!=</span> <span class="st">'9dAvrH0+R6a0U5adPzZSyA'</span>,]</span>
+<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a>rt.s<span class="sc">$</span>rgn.fix <span class="ot">&lt;-</span> rt.s<span class="sc">$</span>WordNum <span class="sc">-</span> rt.s<span class="sc">$</span>pos <span class="sc">+</span> <span class="dv">1</span></span>
+<span id="cb5-28"><a href="#cb5-28" aria-hidden="true" tabindex="-1"></a>rt.s<span class="sc">$</span>word.num.z <span class="ot">&lt;-</span> <span class="fu">scale</span>(rt.s<span class="sc">$</span>WordNum)</span>
+<span id="cb5-29"><a href="#cb5-29" aria-hidden="true" tabindex="-1"></a>rt.s<span class="sc">$</span>word.len <span class="ot">&lt;-</span> <span class="fu">nchar</span>(<span class="fu">as.character</span>(rt.s<span class="sc">$</span>Word))</span>
+<span id="cb5-30"><a href="#cb5-30" aria-hidden="true" tabindex="-1"></a>rt.s<span class="sc">$</span>Altword.len <span class="ot">&lt;-</span> <span class="fu">nchar</span>(<span class="fu">as.character</span>(rt.s<span class="sc">$</span>Alt))</span>
+<span id="cb5-31"><a href="#cb5-31" aria-hidden="true" tabindex="-1"></a><span class="fu">contrasts</span>(rt.s<span class="sc">$</span>expect) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="sc">-</span>.<span class="dv">5</span>,.<span class="dv">5</span>)</span>
+<span id="cb5-32"><a href="#cb5-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-33"><a href="#cb5-33" aria-hidden="true" tabindex="-1"></a>rt.s<span class="sc">$</span>item.expect <span class="ot">&lt;-</span> <span class="fu">paste</span>(rt.s<span class="sc">$</span>item, rt.s<span class="sc">$</span>expect, <span class="at">sep=</span><span class="st">"."</span>)</span>
+<span id="cb5-34"><a href="#cb5-34" aria-hidden="true" tabindex="-1"></a>delong.items <span class="ot">&lt;-</span> rt.s <span class="sc">%&gt;%</span> <span class="fu">filter</span>(rgn.fix <span class="sc">==</span> <span class="dv">0</span>) <span class="sc">%&gt;%</span> <span class="fu">distinct</span>(item.expect, <span class="at">.keep_all =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb5-35"><a href="#cb5-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-36"><a href="#cb5-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-37"><a href="#cb5-37" aria-hidden="true" tabindex="-1"></a><span class="co">#Response accuracy</span></span>
+<span id="cb5-38"><a href="#cb5-38" aria-hidden="true" tabindex="-1"></a>rt.s <span class="sc">%&gt;%</span> <span class="fu">filter</span>(rgn.fix <span class="sc">&gt;</span> <span class="sc">-</span><span class="dv">4</span> <span class="sc">&amp;</span> rgn.fix <span class="sc">&lt;</span> <span class="dv">5</span>) <span class="sc">%&gt;%</span> <span class="fu">summarize</span>(<span class="at">n=</span><span class="fu">n</span>(), <span class="at">acc=</span><span class="fu">mean</span>(Acc), <span class="at">sd=</span><span class="fu">sd</span>(Acc), <span class="at">error=</span><span class="dv">1</span><span class="sc">-</span>acc)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>      n       acc        sd      error
+1 23598 0.9619459 0.1913309 0.03805407</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>rt.s <span class="sc">%&gt;%</span> <span class="fu">filter</span>(rgn.fix <span class="sc">==</span> <span class="dv">0</span>) <span class="sc">%&gt;%</span> <span class="fu">summarize</span>(<span class="at">n=</span><span class="fu">n</span>(), <span class="at">acc=</span><span class="fu">mean</span>(Acc), <span class="at">sd=</span><span class="fu">sd</span>(Acc), <span class="at">error=</span><span class="dv">1</span><span class="sc">-</span>acc)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     n       acc        sd      error
+1 3002 0.9583611 0.1997959 0.04163891</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>rt.s <span class="sc">%&gt;%</span> <span class="fu">filter</span>(rgn.fix <span class="sc">==</span> <span class="dv">1</span>) <span class="sc">%&gt;%</span> <span class="fu">summarize</span>(<span class="at">n=</span><span class="fu">n</span>(), <span class="at">acc=</span><span class="fu">mean</span>(Acc), <span class="at">sd=</span><span class="fu">sd</span>(Acc), <span class="at">error=</span><span class="dv">1</span><span class="sc">-</span>acc)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     n     acc        sd      error
+1 3002 0.97002 0.1705606 0.02998001</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>rt.s <span class="sc">%&gt;%</span> <span class="fu">filter</span>(rgn.fix <span class="sc">&gt;</span> <span class="sc">-</span><span class="dv">4</span> <span class="sc">&amp;</span> rgn.fix <span class="sc">&lt;</span> <span class="dv">4</span>) <span class="sc">%&gt;%</span> <span class="fu">group_by</span>(Hash) <span class="sc">%&gt;%</span> <span class="fu">summarize</span>(<span class="at">n=</span><span class="fu">n</span>(), <span class="at">acc=</span><span class="fu">mean</span>(Acc), <span class="at">sd=</span><span class="fu">sd</span>(Acc), <span class="at">error=</span><span class="dv">1</span><span class="sc">-</span>acc) <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">keep =</span> acc <span class="sc">&gt;</span> <span class="fu">mean</span>(acc)<span class="sc">-</span><span class="dv">2</span><span class="sc">*</span><span class="fu">sd</span>(acc)) <span class="sc">%&gt;%</span> <span class="fu">arrange</span>(acc) <span class="sc">%&gt;%</span> <span class="fu">as.data.frame</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                     Hash   n       acc         sd       error  keep
+1  f8dC3CkleTBP9lUufzUOyQ 552 0.7427536 0.43751280 0.257246377 FALSE
+2  gyxidIf0fqXBM7nxg2K7SQ 552 0.8170290 0.38699345 0.182971014 FALSE
+3  t2rYqwCVBUykHxRtNRqBtQ 552 0.9112319 0.28466672 0.088768116  TRUE
+4  dyI7wx61eBZYq2o9wS4tsA 552 0.9221014 0.26825497 0.077898551  TRUE
+5  FL9GcZf45gzQsdPpvTsLJg 552 0.9456522 0.22690838 0.054347826  TRUE
+6  8j990JHquC/6unw8qovRWQ 552 0.9474638 0.22330811 0.052536232  TRUE
+7  99jrAf0To/g4ZIwJDY/SEQ 552 0.9474638 0.22330811 0.052536232  TRUE
+8  iXGadIxLdpfM2pMbO6K7TQ 552 0.9474638 0.22330811 0.052536232  TRUE
+9  U+8f26HxAvAy4+cd8P3vkg 552 0.9474638 0.22330811 0.052536232  TRUE
+10 oUGLEaEbDWnX0WS12B4GOg 552 0.9565217 0.20411609 0.043478261  TRUE
+11 uHEfza63tpcXyFt2HwGSSg 552 0.9565217 0.20411609 0.043478261  TRUE
+12 q2XrvdNoCHp1YZCq7dN8HA 552 0.9601449 0.19579605 0.039855072  TRUE
+13 lPGecyfVdKE6V64/3kDUdg 552 0.9637681 0.18703612 0.036231884  TRUE
+14 kWpeTvaumuRuWcdRXVjiLQ 552 0.9655797 0.18247151 0.034420290  TRUE
+15 alCPeOMu7f41UOooUwGp5A 552 0.9692029 0.17292429 0.030797101  TRUE
+16 jb+4ZfbC7RhgoM7wlgPG4A 552 0.9692029 0.17292429 0.030797101  TRUE
+17 /PH+iRR+XZI2ec1qIjPRcA 552 0.9710145 0.16791792 0.028985507  TRUE
+18 BlTBRObA3WcIlkoTayKudw 552 0.9710145 0.16791792 0.028985507  TRUE
+19 dJbF9mAeWx7Otz5+3gyufw 552 0.9710145 0.16791792 0.028985507  TRUE
+20 pdvvJk1u5PFvEyuv7Xh9gQ 552 0.9710145 0.16791792 0.028985507  TRUE
+21 kuTCdKs6Se9JBqMjILQk1w 552 0.9764493 0.15178216 0.023550725  TRUE
+22 Uxfw4CUBqBauHzkQVW0Zfw 552 0.9764493 0.15178216 0.023550725  TRUE
+23 hsOE7RjZe9g8pgLKAcVONg 552 0.9800725 0.13987807 0.019927536  TRUE
+24 nO7DlMQiDGoiCAA1atpwGA 552 0.9800725 0.13987807 0.019927536  TRUE
+25 e0o4nK5ULkW+4SdclS092g 552 0.9818841 0.13349171 0.018115942  TRUE
+26 nCo9yIhDFSY1i66lqYSGaw 552 0.9818841 0.13349171 0.018115942  TRUE
+27 ndc1rWPtoNONnpi2g/kisw 552 0.9836957 0.12675813 0.016304348  TRUE
+28 eRQc/n7Zp/07pZoIjm4YjQ 552 0.9855072 0.11961871 0.014492754  TRUE
+29 jX6HLcsRaqEF9S2zaw4o9g 552 0.9855072 0.11961871 0.014492754  TRUE
+30 7zE1N9uYDczk0WyDJ7asig 552 0.9891304 0.10378309 0.010869565  TRUE
+31 R3rO7l/g2QQmE8dHY7uKVQ 552 0.9891304 0.10378309 0.010869565  TRUE
+32 5DbOJ/MN3pQYPwLsM61S7g 552 0.9909420 0.09482729 0.009057971  TRUE
+33 l1CFdj3XxdUY/g72pc88RA 552 0.9909420 0.09482729 0.009057971  TRUE
+34 mZWaXixbbdck3XK51B4K6Q 552 0.9909420 0.09482729 0.009057971  TRUE
+35 ofNwtpdFYKMcJo19ks8YCA 552 0.9909420 0.09482729 0.009057971  TRUE
+36 Meiu9YYsrQhiAcPMLUNxMw 552 0.9927536 0.08489360 0.007246377  TRUE
+37 wDoGt7DLcwC57E8wIVcfoQ 552 0.9945652 0.07358706 0.005434783  TRUE
+38 7fXus/pCAdSJoGyMElmM5A 552 0.9981884 0.04256283 0.001811594  TRUE</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co">#remove 2 (73.5% and 81.9%) - all others &gt;90%</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>rt.s.filt <span class="ot">&lt;-</span> rt.s[rt.s<span class="sc">$</span>Hash <span class="sc">!=</span> <span class="st">"gyxidIf0fqXBM7nxg2K7SQ"</span> <span class="sc">&amp;</span> rt.s<span class="sc">$</span>Hash <span class="sc">!=</span> <span class="st">"f8dC3CkleTBP9lUufzUOyQ"</span>,]</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>rt.s.filt <span class="sc">%&gt;%</span> <span class="fu">filter</span>(rgn.fix <span class="sc">&gt;</span> <span class="sc">-</span><span class="dv">4</span> <span class="sc">&amp;</span> rgn.fix <span class="sc">&lt;</span> <span class="dv">5</span>) <span class="sc">%&gt;%</span> <span class="fu">summarize</span>(<span class="at">n=</span><span class="fu">n</span>(), <span class="at">acc=</span><span class="fu">mean</span>(Acc), <span class="at">sd=</span><span class="fu">sd</span>(Acc), <span class="at">error=</span><span class="dv">1</span><span class="sc">-</span>acc)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>      n       acc        sd      error
+1 22356 0.9717302 0.1657464 0.02826982</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>rt.s.filt <span class="sc">%&gt;%</span> <span class="fu">filter</span>(rgn.fix <span class="sc">==</span> <span class="dv">0</span>) <span class="sc">%&gt;%</span> <span class="fu">summarize</span>(<span class="at">n=</span><span class="fu">n</span>(), <span class="at">acc=</span><span class="fu">mean</span>(Acc), <span class="at">sd=</span><span class="fu">sd</span>(Acc), <span class="at">error=</span><span class="dv">1</span><span class="sc">-</span>acc)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     n       acc        sd      error
+1 2844 0.9662447 0.1806304 0.03375527</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>rt.s.filt <span class="sc">%&gt;%</span> <span class="fu">filter</span>(rgn.fix <span class="sc">==</span> <span class="dv">1</span>) <span class="sc">%&gt;%</span> <span class="fu">summarize</span>(<span class="at">n=</span><span class="fu">n</span>(), <span class="at">acc=</span><span class="fu">mean</span>(Acc), <span class="at">sd=</span><span class="fu">sd</span>(Acc), <span class="at">error=</span><span class="dv">1</span><span class="sc">-</span>acc)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     n       acc       sd      error
+1 2844 0.9792546 0.142556 0.02074543</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Filter out reading errors</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>rt.s.rgn <span class="ot">&lt;-</span> rt.s.filt <span class="sc">%&gt;%</span> <span class="fu">filter</span>(rgn.fix <span class="sc">&gt;</span> <span class="sc">-</span><span class="dv">4</span> <span class="sc">&amp;</span> rgn.fix <span class="sc">&lt;</span> <span class="dv">5</span>) <span class="sc">%&gt;%</span> <span class="fu">filter</span>(Acc <span class="sc">==</span> <span class="dv">1</span>) <span class="sc">%&gt;%</span> <span class="fu">as.data.frame</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>After these removals, the total number of rows of remaining data is 73633.</p>
+</section>
+<section id="stats-for-participant-ages" class="level2">
+<h2 class="anchored" data-anchor-id="stats-for-participant-ages">Stats for Participant ages!</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>age_stats <span class="ot">&lt;-</span> d <span class="sc">|&gt;</span> </span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(FieldName <span class="sc">==</span> <span class="st">"age"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">Mean =</span> <span class="fu">mean</span>(<span class="fu">as.numeric</span>(Value)), <span class="at">Minimum =</span> <span class="fu">min</span>(<span class="fu">as.numeric</span>(Value)), <span class="at">Maximum =</span> <span class="fu">max</span>(<span class="fu">as.numeric</span>(Value)), <span class="at">Standard_Deviation =</span> <span class="fu">sd</span>(<span class="fu">as.numeric</span>(Value)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Here’s the table for those stats:</p>
+<table class="table">
+<thead>
+<tr class="header">
+<th style="text-align: right;">Mean</th>
+<th style="text-align: right;">Minimum</th>
+<th style="text-align: right;">Maximum</th>
+<th style="text-align: right;">Standard_Deviation</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">34.87179</td>
+<td style="text-align: right;">18</td>
+<td style="text-align: right;">71</td>
+<td style="text-align: right;">14.08093</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="response-times-by-region" class="level2">
+<h2 class="anchored" data-anchor-id="response-times-by-region">Response times by region</h2>
+<p>These are participant response times for the pair task based on which word in the sequence they are choosing. As you’ll notice, results are very uniform and quick until the appearance of an unexpected article. The unexpected nouns incur by far the most delay, a very statistically significant result!</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Graph raw (error free) RTs</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>rgn.rt.raw <span class="ot">&lt;-</span> rt.s.filt <span class="sc">%&gt;%</span> <span class="fu">filter</span>(rgn.fix <span class="sc">&gt;</span> <span class="sc">-</span><span class="dv">4</span> <span class="sc">&amp;</span> rgn.fix <span class="sc">&lt;</span> <span class="dv">5</span>) <span class="sc">%&gt;%</span> <span class="fu">filter</span>(Acc <span class="sc">==</span> <span class="dv">1</span>) <span class="sc">%&gt;%</span> <span class="fu">group_by</span>(rgn.fix, expect) <span class="sc">%&gt;%</span> <span class="fu">summarize</span>(<span class="at">n=</span><span class="fu">n</span>(), <span class="at">subj=</span><span class="fu">length</span>(<span class="fu">unique</span>(Hash)), <span class="at">rt=</span><span class="fu">mean</span>(RT), <span class="at">sd=</span><span class="fu">sd</span>(RT), <span class="at">stderr=</span>sd<span class="sc">/</span><span class="fu">sqrt</span>(subj)) <span class="sc">%&gt;%</span> <span class="fu">as.data.frame</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`summarise()` has grouped output by 'rgn.fix'. You can override using the
+`.groups` argument.</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>rgn.rt.raw<span class="sc">$</span>rgn <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(<span class="fu">recode</span>(rgn.rt.raw<span class="sc">$</span>rgn.fix, <span class="st">"-3"</span><span class="ot">=</span><span class="st">"CW-3"</span>, <span class="st">"-2"</span><span class="ot">=</span><span class="st">"CW-2"</span>, <span class="st">"-1"</span><span class="ot">=</span><span class="st">"CW-1"</span>, <span class="st">"0"</span><span class="ot">=</span><span class="st">"art"</span>, <span class="st">"1"</span><span class="ot">=</span><span class="st">"n"</span>,<span class="st">"2"</span><span class="ot">=</span><span class="st">"CW+1"</span>, <span class="st">"3"</span><span class="ot">=</span><span class="st">"CW+2"</span>, <span class="st">"4"</span><span class="ot">=</span><span class="st">"CW+3"</span>))</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>rgn.rt.raw<span class="sc">$</span>rgn <span class="ot">&lt;-</span> <span class="fu">ordered</span>(rgn.rt.raw<span class="sc">$</span>rgn, <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"CW-3"</span>, <span class="st">"CW-2"</span>, <span class="st">"CW-1"</span>, <span class="st">"art"</span>, <span class="st">"n"</span>, <span class="st">"CW+1"</span>, <span class="st">"CW+2"</span>, <span class="st">"CW+3"</span>))</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(rgn.rt.raw, <span class="fu">aes</span>(<span class="at">x=</span>rgn, <span class="at">y=</span>rt, <span class="at">group=</span>expect, <span class="at">shape=</span>expect)) <span class="sc">+</span></span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">stat =</span> <span class="st">"identity"</span>, <span class="at">position=</span><span class="fu">position_dodge</span>(<span class="at">width=</span>.<span class="dv">3</span>)) <span class="sc">+</span></span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">stat =</span> <span class="st">"identity"</span>, <span class="at">position=</span><span class="fu">position_dodge</span>(<span class="at">width=</span>.<span class="dv">3</span>), <span class="at">size=</span><span class="dv">3</span>) <span class="sc">+</span></span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_errorbar</span>(<span class="fu">aes</span>(<span class="at">ymin =</span> rt<span class="sc">-</span>stderr, <span class="at">ymax =</span> rt<span class="sc">+</span>stderr), <span class="at">width=</span>.<span class="dv">15</span>, <span class="at">position=</span><span class="fu">position_dodge</span>(<span class="at">width=</span>.<span class="dv">3</span>)) <span class="sc">+</span></span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_shape_manual</span>(<span class="at">name=</span><span class="st">""</span>, <span class="at">labels=</span><span class="fu">c</span>(<span class="st">"Expected"</span>, <span class="st">"Unexpected"</span>), <span class="at">values =</span> <span class="fu">c</span>(<span class="dv">21</span>,<span class="dv">19</span>)) <span class="sc">+</span> </span>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">"Word"</span>) <span class="sc">+</span> <span class="fu">ylab</span>(<span class="st">"Reading Time (msec)"</span>) <span class="sc">+</span> </span>
+<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="hw5-lebow_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>Here’s a table with the same results:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>rgn.rt.raw <span class="sc">|&gt;</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="fu">gt</span>() <span class="sc">|&gt;</span></span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cols_label</span>(<span class="at">expect =</span> <span class="st">"Expectation"</span>, <span class="at">rt =</span> <span class="st">"Reaction Time (ms)"</span>, <span class="at">sd =</span> <span class="st">"Standard Deviation"</span>, <span class="at">stderr =</span> <span class="st">"Standard Error"</span>, <span class="at">rgn =</span> <span class="st">"Region"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fmt_number</span>(<span class="at">columns =</span> <span class="fu">c</span>(rt, sd, stderr), <span class="at">n_sigfig =</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<div id="bgicbjuisb" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#bgicbjuisb table {
+  font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#bgicbjuisb thead, #bgicbjuisb tbody, #bgicbjuisb tfoot, #bgicbjuisb tr, #bgicbjuisb td, #bgicbjuisb th {
+  border-style: none;
+}
+
+#bgicbjuisb p {
+  margin: 0;
+  padding: 0;
+}
+
+#bgicbjuisb .gt_table {
+  display: table;
+  border-collapse: collapse;
+  line-height: normal;
+  margin-left: auto;
+  margin-right: auto;
+  color: #333333;
+  font-size: 16px;
+  font-weight: normal;
+  font-style: normal;
+  background-color: #FFFFFF;
+  width: auto;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #A8A8A8;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #A8A8A8;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+}
+
+#bgicbjuisb .gt_caption {
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+#bgicbjuisb .gt_title {
+  color: #333333;
+  font-size: 125%;
+  font-weight: initial;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
+}
+
+#bgicbjuisb .gt_subtitle {
+  color: #333333;
+  font-size: 85%;
+  font-weight: initial;
+  padding-top: 3px;
+  padding-bottom: 5px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
+}
+
+#bgicbjuisb .gt_heading {
+  background-color: #FFFFFF;
+  text-align: center;
+  border-bottom-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#bgicbjuisb .gt_bottom_border {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#bgicbjuisb .gt_col_headings {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#bgicbjuisb .gt_col_heading {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  overflow-x: hidden;
+}
+
+#bgicbjuisb .gt_column_spanner_outer {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+#bgicbjuisb .gt_column_spanner_outer:first-child {
+  padding-left: 0;
+}
+
+#bgicbjuisb .gt_column_spanner_outer:last-child {
+  padding-right: 0;
+}
+
+#bgicbjuisb .gt_column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  overflow-x: hidden;
+  display: inline-block;
+  width: 100%;
+}
+
+#bgicbjuisb .gt_spanner_row {
+  border-bottom-style: hidden;
+}
+
+#bgicbjuisb .gt_group_heading {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  text-align: left;
+}
+
+#bgicbjuisb .gt_empty_group_heading {
+  padding: 0.5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#bgicbjuisb .gt_from_md > :first-child {
+  margin-top: 0;
+}
+
+#bgicbjuisb .gt_from_md > :last-child {
+  margin-bottom: 0;
+}
+
+#bgicbjuisb .gt_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin: 10px;
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  overflow-x: hidden;
+}
+
+#bgicbjuisb .gt_stub {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#bgicbjuisb .gt_stub_row_group {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+  vertical-align: top;
+}
+
+#bgicbjuisb .gt_row_group_first td {
+  border-top-width: 2px;
+}
+
+#bgicbjuisb .gt_row_group_first th {
+  border-top-width: 2px;
+}
+
+#bgicbjuisb .gt_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#bgicbjuisb .gt_first_summary_row {
+  border-top-style: solid;
+  border-top-color: #D3D3D3;
+}
+
+#bgicbjuisb .gt_first_summary_row.thick {
+  border-top-width: 2px;
+}
+
+#bgicbjuisb .gt_last_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#bgicbjuisb .gt_grand_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#bgicbjuisb .gt_first_grand_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: double;
+  border-top-width: 6px;
+  border-top-color: #D3D3D3;
+}
+
+#bgicbjuisb .gt_last_grand_summary_row_top {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: double;
+  border-bottom-width: 6px;
+  border-bottom-color: #D3D3D3;
+}
+
+#bgicbjuisb .gt_striped {
+  background-color: rgba(128, 128, 128, 0.05);
+}
+
+#bgicbjuisb .gt_table_body {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#bgicbjuisb .gt_footnotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#bgicbjuisb .gt_footnote {
+  margin: 0px;
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#bgicbjuisb .gt_sourcenotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#bgicbjuisb .gt_sourcenote {
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#bgicbjuisb .gt_left {
+  text-align: left;
+}
+
+#bgicbjuisb .gt_center {
+  text-align: center;
+}
+
+#bgicbjuisb .gt_right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#bgicbjuisb .gt_font_normal {
+  font-weight: normal;
+}
+
+#bgicbjuisb .gt_font_bold {
+  font-weight: bold;
+}
+
+#bgicbjuisb .gt_font_italic {
+  font-style: italic;
+}
+
+#bgicbjuisb .gt_super {
+  font-size: 65%;
+}
+
+#bgicbjuisb .gt_footnote_marks {
+  font-size: 75%;
+  vertical-align: 0.4em;
+  position: initial;
+}
+
+#bgicbjuisb .gt_asterisk {
+  font-size: 100%;
+  vertical-align: 0;
+}
+
+#bgicbjuisb .gt_indent_1 {
+  text-indent: 5px;
+}
+
+#bgicbjuisb .gt_indent_2 {
+  text-indent: 10px;
+}
+
+#bgicbjuisb .gt_indent_3 {
+  text-indent: 15px;
+}
+
+#bgicbjuisb .gt_indent_4 {
+  text-indent: 20px;
+}
+
+#bgicbjuisb .gt_indent_5 {
+  text-indent: 25px;
+}
+</style>
+<table class="gt_table" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
+  <thead>
+    <tr class="gt_col_headings">
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="rgn.fix">rgn.fix</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="Expectation">Expectation</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="n">n</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="subj">subj</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="Reaction Time (ms)">Reaction Time (ms)</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="Standard Deviation">Standard Deviation</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="Standard Error">Standard Error</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="Region">Region</th>
+    </tr>
+  </thead>
+  <tbody class="gt_table_body">
+    <tr><td headers="rgn.fix" class="gt_row gt_right">-3</td>
+<td headers="expect" class="gt_row gt_center">expected</td>
+<td headers="n" class="gt_row gt_right">1383</td>
+<td headers="subj" class="gt_row gt_right">36</td>
+<td headers="rt" class="gt_row gt_right">750</td>
+<td headers="sd" class="gt_row gt_right">290</td>
+<td headers="stderr" class="gt_row gt_right">48</td>
+<td headers="rgn" class="gt_row gt_center">CW-3</td></tr>
+    <tr><td headers="rgn.fix" class="gt_row gt_right">-3</td>
+<td headers="expect" class="gt_row gt_center">unexpected</td>
+<td headers="n" class="gt_row gt_right">1380</td>
+<td headers="subj" class="gt_row gt_right">36</td>
+<td headers="rt" class="gt_row gt_right">760</td>
+<td headers="sd" class="gt_row gt_right">310</td>
+<td headers="stderr" class="gt_row gt_right">51</td>
+<td headers="rgn" class="gt_row gt_center">CW-3</td></tr>
+    <tr><td headers="rgn.fix" class="gt_row gt_right">-2</td>
+<td headers="expect" class="gt_row gt_center">expected</td>
+<td headers="n" class="gt_row gt_right">1376</td>
+<td headers="subj" class="gt_row gt_right">36</td>
+<td headers="rt" class="gt_row gt_right">730</td>
+<td headers="sd" class="gt_row gt_right">310</td>
+<td headers="stderr" class="gt_row gt_right">52</td>
+<td headers="rgn" class="gt_row gt_center">CW-2</td></tr>
+    <tr><td headers="rgn.fix" class="gt_row gt_right">-2</td>
+<td headers="expect" class="gt_row gt_center">unexpected</td>
+<td headers="n" class="gt_row gt_right">1380</td>
+<td headers="subj" class="gt_row gt_right">36</td>
+<td headers="rt" class="gt_row gt_right">740</td>
+<td headers="sd" class="gt_row gt_right">410</td>
+<td headers="stderr" class="gt_row gt_right">69</td>
+<td headers="rgn" class="gt_row gt_center">CW-2</td></tr>
+    <tr><td headers="rgn.fix" class="gt_row gt_right">-1</td>
+<td headers="expect" class="gt_row gt_center">expected</td>
+<td headers="n" class="gt_row gt_right">1375</td>
+<td headers="subj" class="gt_row gt_right">36</td>
+<td headers="rt" class="gt_row gt_right">760</td>
+<td headers="sd" class="gt_row gt_right">320</td>
+<td headers="stderr" class="gt_row gt_right">54</td>
+<td headers="rgn" class="gt_row gt_center">CW-1</td></tr>
+    <tr><td headers="rgn.fix" class="gt_row gt_right">-1</td>
+<td headers="expect" class="gt_row gt_center">unexpected</td>
+<td headers="n" class="gt_row gt_right">1389</td>
+<td headers="subj" class="gt_row gt_right">36</td>
+<td headers="rt" class="gt_row gt_right">750</td>
+<td headers="sd" class="gt_row gt_right">270</td>
+<td headers="stderr" class="gt_row gt_right">45</td>
+<td headers="rgn" class="gt_row gt_center">CW-1</td></tr>
+    <tr><td headers="rgn.fix" class="gt_row gt_right">0</td>
+<td headers="expect" class="gt_row gt_center">expected</td>
+<td headers="n" class="gt_row gt_right">1363</td>
+<td headers="subj" class="gt_row gt_right">36</td>
+<td headers="rt" class="gt_row gt_right">670</td>
+<td headers="sd" class="gt_row gt_right">220</td>
+<td headers="stderr" class="gt_row gt_right">37</td>
+<td headers="rgn" class="gt_row gt_center">art</td></tr>
+    <tr><td headers="rgn.fix" class="gt_row gt_right">0</td>
+<td headers="expect" class="gt_row gt_center">unexpected</td>
+<td headers="n" class="gt_row gt_right">1385</td>
+<td headers="subj" class="gt_row gt_right">36</td>
+<td headers="rt" class="gt_row gt_right">720</td>
+<td headers="sd" class="gt_row gt_right">340</td>
+<td headers="stderr" class="gt_row gt_right">57</td>
+<td headers="rgn" class="gt_row gt_center">art</td></tr>
+    <tr><td headers="rgn.fix" class="gt_row gt_right">1</td>
+<td headers="expect" class="gt_row gt_center">expected</td>
+<td headers="n" class="gt_row gt_right">1397</td>
+<td headers="subj" class="gt_row gt_right">36</td>
+<td headers="rt" class="gt_row gt_right">700</td>
+<td headers="sd" class="gt_row gt_right">260</td>
+<td headers="stderr" class="gt_row gt_right">43</td>
+<td headers="rgn" class="gt_row gt_center">n</td></tr>
+    <tr><td headers="rgn.fix" class="gt_row gt_right">1</td>
+<td headers="expect" class="gt_row gt_center">unexpected</td>
+<td headers="n" class="gt_row gt_right">1388</td>
+<td headers="subj" class="gt_row gt_right">36</td>
+<td headers="rt" class="gt_row gt_right">1,100</td>
+<td headers="sd" class="gt_row gt_right">540</td>
+<td headers="stderr" class="gt_row gt_right">90</td>
+<td headers="rgn" class="gt_row gt_center">n</td></tr>
+    <tr><td headers="rgn.fix" class="gt_row gt_right">2</td>
+<td headers="expect" class="gt_row gt_center">expected</td>
+<td headers="n" class="gt_row gt_right">1377</td>
+<td headers="subj" class="gt_row gt_right">36</td>
+<td headers="rt" class="gt_row gt_right">780</td>
+<td headers="sd" class="gt_row gt_right">330</td>
+<td headers="stderr" class="gt_row gt_right">55</td>
+<td headers="rgn" class="gt_row gt_center">CW+1</td></tr>
+    <tr><td headers="rgn.fix" class="gt_row gt_right">2</td>
+<td headers="expect" class="gt_row gt_center">unexpected</td>
+<td headers="n" class="gt_row gt_right">1389</td>
+<td headers="subj" class="gt_row gt_right">36</td>
+<td headers="rt" class="gt_row gt_right">860</td>
+<td headers="sd" class="gt_row gt_right">1,200</td>
+<td headers="stderr" class="gt_row gt_right">190</td>
+<td headers="rgn" class="gt_row gt_center">CW+1</td></tr>
+    <tr><td headers="rgn.fix" class="gt_row gt_right">3</td>
+<td headers="expect" class="gt_row gt_center">expected</td>
+<td headers="n" class="gt_row gt_right">1363</td>
+<td headers="subj" class="gt_row gt_right">36</td>
+<td headers="rt" class="gt_row gt_right">790</td>
+<td headers="sd" class="gt_row gt_right">320</td>
+<td headers="stderr" class="gt_row gt_right">54</td>
+<td headers="rgn" class="gt_row gt_center">CW+2</td></tr>
+    <tr><td headers="rgn.fix" class="gt_row gt_right">3</td>
+<td headers="expect" class="gt_row gt_center">unexpected</td>
+<td headers="n" class="gt_row gt_right">1349</td>
+<td headers="subj" class="gt_row gt_right">36</td>
+<td headers="rt" class="gt_row gt_right">790</td>
+<td headers="sd" class="gt_row gt_right">390</td>
+<td headers="stderr" class="gt_row gt_right">65</td>
+<td headers="rgn" class="gt_row gt_center">CW+2</td></tr>
+    <tr><td headers="rgn.fix" class="gt_row gt_right">4</td>
+<td headers="expect" class="gt_row gt_center">expected</td>
+<td headers="n" class="gt_row gt_right">1215</td>
+<td headers="subj" class="gt_row gt_right">36</td>
+<td headers="rt" class="gt_row gt_right">770</td>
+<td headers="sd" class="gt_row gt_right">300</td>
+<td headers="stderr" class="gt_row gt_right">49</td>
+<td headers="rgn" class="gt_row gt_center">CW+3</td></tr>
+    <tr><td headers="rgn.fix" class="gt_row gt_right">4</td>
+<td headers="expect" class="gt_row gt_center">unexpected</td>
+<td headers="n" class="gt_row gt_right">1215</td>
+<td headers="subj" class="gt_row gt_right">36</td>
+<td headers="rt" class="gt_row gt_right">790</td>
+<td headers="sd" class="gt_row gt_right">300</td>
+<td headers="stderr" class="gt_row gt_right">50</td>
+<td headers="rgn" class="gt_row gt_center">CW+3</td></tr>
+  </tbody>
+  
+  
+</table>
+</div>
+</div>
+</div>
+</section>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

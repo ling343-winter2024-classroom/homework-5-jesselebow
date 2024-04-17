@@ -1,0 +1,166 @@
+---
+title: "Homework 5"
+author: "Jesse LeBow"
+format:
+  html: 
+    embed-resources: false
+---
+
+# Homework 5
+
+```{r}
+#| warning: false
+#install.packages("gt")
+library(gt)
+library(tidyverse)
+library(here)
+library(knitr)
+```
+
+## Prediction in the Maze
+
+This study explores the role of prediction in language comprehension.
+
+Even intuitively, we can realize that prediction is natural to understanding of written in spoken language in some form -- it's the reason we're able to anticipate how a sentence will end, perhaps leading us to interject or tune out before an utterance has finished.
+
+One way prediction has been tested in the past is through the alternating use of high-cloze and unexpected nouns in constrained sentences. High-cloze nouns associated with either indefinite article (a/an) were contrasted with unexpected nouns associated with the other article; so, in a sentence like "The man rode ___", the nouns might be "a bicycle" (high-cloze) and "an elephant" (unexpected). Reaction times and correctness scores are then measured and compared.
+
+To measure this, an A-maze task was conducted using article-noun pairings like the one above. In an A-maze task, participants select one word from pairs until the sentence is complete. These pairs are composed of a target and a distractor word. A distractor word is one which could not logically fit into a given sentence. So, if the goal were to make the sentence "The man rode a bicycle," then the third word pairing might be [rode/pepper]. Each time a word is chosen, the next pair of words is shown. Eventually, one of these word pairs contains an indefinite article. The hypothesis is that, if the article corresponds to a noun that would be expected to follow ("[ride] a bicycle"), the participant will tend to answer correctly more often, and with less delay, than in the alternative case ("[ride] an elephant"). This would then suggest that prediction is aiding the comprehension and completion of these sentences.
+
+
+## Importing Data
+
+```{r}
+here::i_am("analysis/hw5-lebow.qmd")
+d <- read.csv(here("data/delong maze 40Ss.csv"), 
+              header = 0, sep = ",", comment.char = "#", strip.white = T,
+              col.names = c("Index","Time","Counter","Hash","Owner","Controller","Item","Element","Type","Group","FieldName","Value","WordNum","Word","Alt","WordOn","CorrWord","RT","Sent","TotalTime","Question","Resp","Acc","RespRT"))
+```
+
+These are the column names, in order, and what they represent:
+
+Index - Participant number.
+Time - When the assessment began.
+Counter - (I'm not sure)
+Hash - A hashed version of the participant's IP address.
+Owner - Whether the participant was logged in as the study owner at the time (false for all participants).
+Controller - The kind of assessment in that row. Either form (entry survey), Maze (the task itself), or Question (about the task).
+Item - Corresponds to a specific task, including the intro survey, practice questions, and each individual assessment for the maze tasks.
+Element - Everything but question is 0, and question is 1.
+Type - the type of assessment. Can be intro, practice, or code corresponding to a specific task.
+Group - Group that the individual task belongs to.
+FieldName - Only for the self-questionnaire at the start.
+Value - Answers to the questionnaire questions.
+WordNum - Number of the word as part of a sequence in the word-pair discrimination portion.
+Word - The actual word.
+Alt - The corresponding distractor word.
+WordOn - Which side (left = 0, right = 1) the correct word is on.
+CorrWord - Whether the participant got it correct the first time.
+RT - Time (ms) from reading until the first answer (correct or not).
+Sent - The full sentence from the individual task.
+TotalTime - Time (ms) to correct word, including initial incorrect responses.
+Question - Comprehension question for the sentence.
+Resp - The answer given to the prior question.
+Acc - 1 if the answer was correct, 0 if not; N/A if not a question row
+RespRT - Time taken (ms) to answer the question.
+
+The total number of participants is `r length(unique(d$Index))`.
+
+## Removal of data
+
+Item #29 was removed due to a coding error, and words with error responses were removed as well:
+
+```{r}
+
+demo <- d[d$Controller == "Form",1:12]
+names(demo) <- c("Subject","MD5","TrialType","Number","Element","Experiment","Item","Field","Response","X","field","resp")
+demo <- as.data.frame(lapply(demo, function (x) if (is.factor(x) | is.character(x)) factor(x) else x)) 
+
+resp <- d[d$Controller == "Question" & substr(d$Type,1,4) != "prac", c(1:10,21:24)]
+resp <- separate(data = resp, col = Type, into = c("exp", "item", "expect", "position", "pos", "cloze", "art.cloze", "n.cloze"), sep = "\\.", convert = TRUE, fill = "right")
+resp <- as.data.frame(lapply(resp, function (x) if (is.factor(x) | is.character(x)) factor(x) else x))
+resp$Acc <- as.numeric(as.character(resp$Acc))
+resp$RespRT <- as.numeric(as.character(resp$RespRT))
+
+rt <- d[d$Controller == "Maze" & substr(d$Type,1,4) != "prac", c(1:10,13:20)]
+rt <- separate(data = rt, col = Type, into = c("exp", "item", "expect", "position", "pos", "cloze", "art.cloze", "n.cloze"), sep = "\\.", convert = TRUE, fill = "right")
+rt <- as.data.frame(lapply(rt, function (x) if (is.factor(x) | is.character(x)) factor(x) else x))
+rt$WordNum <- as.numeric(as.character(rt$WordNum))
+rt$RT <- as.numeric(as.character(rt$RT))
+rt$TotalTime <- as.numeric(as.character(rt$TotalTime))
+rt$Acc <- as.numeric(as.character(recode(rt$CorrWord, yes = "1", no = "0")))
+rt$n.cloze.scale <- scale(rt$n.cloze)
+rt$art.cloze.scale <- scale(rt$art.cloze)
+
+# Removing item 29 due to incorrect noun pairing
+resp <- resp[resp$item != 29,]
+rt <- rt[rt$item != 29,]
+
+rt.s <- rt[rt$Hash != '9dAvrH0+R6a0U5adPzZSyA',]
+
+rt.s$rgn.fix <- rt.s$WordNum - rt.s$pos + 1
+rt.s$word.num.z <- scale(rt.s$WordNum)
+rt.s$word.len <- nchar(as.character(rt.s$Word))
+rt.s$Altword.len <- nchar(as.character(rt.s$Alt))
+contrasts(rt.s$expect) <- c(-.5,.5)
+
+rt.s$item.expect <- paste(rt.s$item, rt.s$expect, sep=".")
+delong.items <- rt.s %>% filter(rgn.fix == 0) %>% distinct(item.expect, .keep_all = TRUE)
+
+
+#Response accuracy
+rt.s %>% filter(rgn.fix > -4 & rgn.fix < 5) %>% summarize(n=n(), acc=mean(Acc), sd=sd(Acc), error=1-acc)
+rt.s %>% filter(rgn.fix == 0) %>% summarize(n=n(), acc=mean(Acc), sd=sd(Acc), error=1-acc)
+rt.s %>% filter(rgn.fix == 1) %>% summarize(n=n(), acc=mean(Acc), sd=sd(Acc), error=1-acc)
+rt.s %>% filter(rgn.fix > -4 & rgn.fix < 4) %>% group_by(Hash) %>% summarize(n=n(), acc=mean(Acc), sd=sd(Acc), error=1-acc) %>% mutate(keep = acc > mean(acc)-2*sd(acc)) %>% arrange(acc) %>% as.data.frame()
+#remove 2 (73.5% and 81.9%) - all others >90%
+
+rt.s.filt <- rt.s[rt.s$Hash != "gyxidIf0fqXBM7nxg2K7SQ" & rt.s$Hash != "f8dC3CkleTBP9lUufzUOyQ",]
+
+rt.s.filt %>% filter(rgn.fix > -4 & rgn.fix < 5) %>% summarize(n=n(), acc=mean(Acc), sd=sd(Acc), error=1-acc)
+rt.s.filt %>% filter(rgn.fix == 0) %>% summarize(n=n(), acc=mean(Acc), sd=sd(Acc), error=1-acc)
+rt.s.filt %>% filter(rgn.fix == 1) %>% summarize(n=n(), acc=mean(Acc), sd=sd(Acc), error=1-acc)
+
+
+#Filter out reading errors
+rt.s.rgn <- rt.s.filt %>% filter(rgn.fix > -4 & rgn.fix < 5) %>% filter(Acc == 1) %>% as.data.frame()
+```
+
+After these removals, the total number of rows of remaining data is `r nrow(d)`.
+
+## Stats for Participant ages!
+
+```{r}
+age_stats <- d |> 
+  filter(FieldName == "age") |>
+  summarize(Mean = mean(as.numeric(Value)), Minimum = min(as.numeric(Value)), Maximum = max(as.numeric(Value)), Standard_Deviation = sd(as.numeric(Value)))
+```
+
+Here's the table for those stats: `r kable(age_stats)`
+
+## Response times by region
+
+These are participant response times for the pair task based on which word in the sequence they are choosing. As you'll notice, results are very uniform and quick until the appearance of an unexpected article. The unexpected nouns incur by far the most delay, a very statistically significant result!
+
+```{r}
+#Graph raw (error free) RTs
+rgn.rt.raw <- rt.s.filt %>% filter(rgn.fix > -4 & rgn.fix < 5) %>% filter(Acc == 1) %>% group_by(rgn.fix, expect) %>% summarize(n=n(), subj=length(unique(Hash)), rt=mean(RT), sd=sd(RT), stderr=sd/sqrt(subj)) %>% as.data.frame()
+rgn.rt.raw$rgn <- as.factor(recode(rgn.rt.raw$rgn.fix, "-3"="CW-3", "-2"="CW-2", "-1"="CW-1", "0"="art", "1"="n","2"="CW+1", "3"="CW+2", "4"="CW+3"))
+rgn.rt.raw$rgn <- ordered(rgn.rt.raw$rgn, levels = c("CW-3", "CW-2", "CW-1", "art", "n", "CW+1", "CW+2", "CW+3"))
+ggplot(rgn.rt.raw, aes(x=rgn, y=rt, group=expect, shape=expect)) +
+  geom_line(stat = "identity", position=position_dodge(width=.3)) +
+  geom_point(stat = "identity", position=position_dodge(width=.3), size=3) +
+  geom_errorbar(aes(ymin = rt-stderr, ymax = rt+stderr), width=.15, position=position_dodge(width=.3)) +
+  scale_shape_manual(name="", labels=c("Expected", "Unexpected"), values = c(21,19)) + 
+  xlab("Word") + ylab("Reading Time (msec)") + 
+  theme_bw()
+```
+
+Here's a table with the same results:
+
+```{r}
+rgn.rt.raw |>
+gt() |>
+  cols_label(expect = "Expectation", rt = "Reaction Time (ms)", sd = "Standard Deviation", stderr = "Standard Error", rgn = "Region") |>
+  fmt_number(columns = c(rt, sd, stderr), n_sigfig = 2)
+```

@@ -1,7 +1,0 @@
----
-title: "Homework 5"
-author: "Jesse LeBow"
-format:
-  html: 
-    embed-resources: false
----
