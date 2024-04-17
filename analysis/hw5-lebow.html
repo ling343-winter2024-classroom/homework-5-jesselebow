@@ -3252,25 +3252,26 @@ vertical-align: -.125em;
 <p>Here’s a table with the same results:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>rgn.rt.raw <span class="sc">|&gt;</span></span>
-<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="fu">gt</span>() <span class="sc">|&gt;</span></span>
-<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cols_label</span>(<span class="at">expect =</span> <span class="st">&quot;Expectation&quot;</span>, <span class="at">rt =</span> <span class="st">&quot;Reaction Time (ms)&quot;</span>, <span class="at">sd =</span> <span class="st">&quot;Standard Deviation&quot;</span>, <span class="at">stderr =</span> <span class="st">&quot;Standard Error&quot;</span>, <span class="at">rgn =</span> <span class="st">&quot;Region&quot;</span>) <span class="sc">|&gt;</span></span>
-<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fmt_number</span>(<span class="at">columns =</span> <span class="fu">c</span>(rt, sd, stderr), <span class="at">n_sigfig =</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span><span class="st">&quot;rgn.fix&quot;</span>) <span class="sc">|&gt;</span></span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a><span class="fu">gt</span>() <span class="sc">|&gt;</span></span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cols_label</span>(<span class="at">expect =</span> <span class="st">&quot;Expectation&quot;</span>, <span class="at">rt =</span> <span class="st">&quot;Reaction Time (ms)&quot;</span>, <span class="at">sd =</span> <span class="st">&quot;Standard Deviation&quot;</span>, <span class="at">stderr =</span> <span class="st">&quot;Standard Error&quot;</span>, <span class="at">rgn =</span> <span class="st">&quot;Region&quot;</span>) <span class="sc">|&gt;</span></span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fmt_number</span>(<span class="at">columns =</span> <span class="fu">c</span>(rt, sd, stderr), <span class="at">n_sigfig =</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 
-<div id="ufwvmiwtbr" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#ufwvmiwtbr table {
+<div id="bdlcevosrk" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#bdlcevosrk table {
 font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
 -webkit-font-smoothing: antialiased;
 -moz-osx-font-smoothing: grayscale;
 }
-#ufwvmiwtbr thead, #ufwvmiwtbr tbody, #ufwvmiwtbr tfoot, #ufwvmiwtbr tr, #ufwvmiwtbr td, #ufwvmiwtbr th {
+#bdlcevosrk thead, #bdlcevosrk tbody, #bdlcevosrk tfoot, #bdlcevosrk tr, #bdlcevosrk td, #bdlcevosrk th {
 border-style: none;
 }
-#ufwvmiwtbr p {
+#bdlcevosrk p {
 margin: 0;
 padding: 0;
 }
-#ufwvmiwtbr .gt_table {
+#bdlcevosrk .gt_table {
 display: table;
 border-collapse: collapse;
 line-height: normal;
@@ -3295,11 +3296,11 @@ border-left-style: none;
 border-left-width: 2px;
 border-left-color: #D3D3D3;
 }
-#ufwvmiwtbr .gt_caption {
+#bdlcevosrk .gt_caption {
 padding-top: 4px;
 padding-bottom: 4px;
 }
-#ufwvmiwtbr .gt_title {
+#bdlcevosrk .gt_title {
 color: #333333;
 font-size: 125%;
 font-weight: initial;
@@ -3310,7 +3311,7 @@ padding-right: 5px;
 border-bottom-color: #FFFFFF;
 border-bottom-width: 0;
 }
-#ufwvmiwtbr .gt_subtitle {
+#bdlcevosrk .gt_subtitle {
 color: #333333;
 font-size: 85%;
 font-weight: initial;
@@ -3321,7 +3322,7 @@ padding-right: 5px;
 border-top-color: #FFFFFF;
 border-top-width: 0;
 }
-#ufwvmiwtbr .gt_heading {
+#bdlcevosrk .gt_heading {
 background-color: #FFFFFF;
 text-align: center;
 border-bottom-color: #FFFFFF;
@@ -3332,12 +3333,12 @@ border-right-style: none;
 border-right-width: 1px;
 border-right-color: #D3D3D3;
 }
-#ufwvmiwtbr .gt_bottom_border {
+#bdlcevosrk .gt_bottom_border {
 border-bottom-style: solid;
 border-bottom-width: 2px;
 border-bottom-color: #D3D3D3;
 }
-#ufwvmiwtbr .gt_col_headings {
+#bdlcevosrk .gt_col_headings {
 border-top-style: solid;
 border-top-width: 2px;
 border-top-color: #D3D3D3;
@@ -3351,7 +3352,7 @@ border-right-style: none;
 border-right-width: 1px;
 border-right-color: #D3D3D3;
 }
-#ufwvmiwtbr .gt_col_heading {
+#bdlcevosrk .gt_col_heading {
 color: #333333;
 background-color: #FFFFFF;
 font-size: 100%;
@@ -3370,7 +3371,7 @@ padding-left: 5px;
 padding-right: 5px;
 overflow-x: hidden;
 }
-#ufwvmiwtbr .gt_column_spanner_outer {
+#bdlcevosrk .gt_column_spanner_outer {
 color: #333333;
 background-color: #FFFFFF;
 font-size: 100%;
@@ -3381,13 +3382,13 @@ padding-bottom: 0;
 padding-left: 4px;
 padding-right: 4px;
 }
-#ufwvmiwtbr .gt_column_spanner_outer:first-child {
+#bdlcevosrk .gt_column_spanner_outer:first-child {
 padding-left: 0;
 }
-#ufwvmiwtbr .gt_column_spanner_outer:last-child {
+#bdlcevosrk .gt_column_spanner_outer:last-child {
 padding-right: 0;
 }
-#ufwvmiwtbr .gt_column_spanner {
+#bdlcevosrk .gt_column_spanner {
 border-bottom-style: solid;
 border-bottom-width: 2px;
 border-bottom-color: #D3D3D3;
@@ -3398,10 +3399,10 @@ overflow-x: hidden;
 display: inline-block;
 width: 100%;
 }
-#ufwvmiwtbr .gt_spanner_row {
+#bdlcevosrk .gt_spanner_row {
 border-bottom-style: hidden;
 }
-#ufwvmiwtbr .gt_group_heading {
+#bdlcevosrk .gt_group_heading {
 padding-top: 8px;
 padding-bottom: 8px;
 padding-left: 5px;
@@ -3426,7 +3427,7 @@ border-right-color: #D3D3D3;
 vertical-align: middle;
 text-align: left;
 }
-#ufwvmiwtbr .gt_empty_group_heading {
+#bdlcevosrk .gt_empty_group_heading {
 padding: 0.5px;
 color: #333333;
 background-color: #FFFFFF;
@@ -3440,13 +3441,13 @@ border-bottom-width: 2px;
 border-bottom-color: #D3D3D3;
 vertical-align: middle;
 }
-#ufwvmiwtbr .gt_from_md > :first-child {
+#bdlcevosrk .gt_from_md > :first-child {
 margin-top: 0;
 }
-#ufwvmiwtbr .gt_from_md > :last-child {
+#bdlcevosrk .gt_from_md > :last-child {
 margin-bottom: 0;
 }
-#ufwvmiwtbr .gt_row {
+#bdlcevosrk .gt_row {
 padding-top: 8px;
 padding-bottom: 8px;
 padding-left: 5px;
@@ -3464,7 +3465,7 @@ border-right-color: #D3D3D3;
 vertical-align: middle;
 overflow-x: hidden;
 }
-#ufwvmiwtbr .gt_stub {
+#bdlcevosrk .gt_stub {
 color: #333333;
 background-color: #FFFFFF;
 font-size: 100%;
@@ -3476,7 +3477,7 @@ border-right-color: #D3D3D3;
 padding-left: 5px;
 padding-right: 5px;
 }
-#ufwvmiwtbr .gt_stub_row_group {
+#bdlcevosrk .gt_stub_row_group {
 color: #333333;
 background-color: #FFFFFF;
 font-size: 100%;
@@ -3489,13 +3490,13 @@ padding-left: 5px;
 padding-right: 5px;
 vertical-align: top;
 }
-#ufwvmiwtbr .gt_row_group_first td {
+#bdlcevosrk .gt_row_group_first td {
 border-top-width: 2px;
 }
-#ufwvmiwtbr .gt_row_group_first th {
+#bdlcevosrk .gt_row_group_first th {
 border-top-width: 2px;
 }
-#ufwvmiwtbr .gt_summary_row {
+#bdlcevosrk .gt_summary_row {
 color: #333333;
 background-color: #FFFFFF;
 text-transform: inherit;
@@ -3504,14 +3505,14 @@ padding-bottom: 8px;
 padding-left: 5px;
 padding-right: 5px;
 }
-#ufwvmiwtbr .gt_first_summary_row {
+#bdlcevosrk .gt_first_summary_row {
 border-top-style: solid;
 border-top-color: #D3D3D3;
 }
-#ufwvmiwtbr .gt_first_summary_row.thick {
+#bdlcevosrk .gt_first_summary_row.thick {
 border-top-width: 2px;
 }
-#ufwvmiwtbr .gt_last_summary_row {
+#bdlcevosrk .gt_last_summary_row {
 padding-top: 8px;
 padding-bottom: 8px;
 padding-left: 5px;
@@ -3520,7 +3521,7 @@ border-bottom-style: solid;
 border-bottom-width: 2px;
 border-bottom-color: #D3D3D3;
 }
-#ufwvmiwtbr .gt_grand_summary_row {
+#bdlcevosrk .gt_grand_summary_row {
 color: #333333;
 background-color: #FFFFFF;
 text-transform: inherit;
@@ -3529,7 +3530,7 @@ padding-bottom: 8px;
 padding-left: 5px;
 padding-right: 5px;
 }
-#ufwvmiwtbr .gt_first_grand_summary_row {
+#bdlcevosrk .gt_first_grand_summary_row {
 padding-top: 8px;
 padding-bottom: 8px;
 padding-left: 5px;
@@ -3538,7 +3539,7 @@ border-top-style: double;
 border-top-width: 6px;
 border-top-color: #D3D3D3;
 }
-#ufwvmiwtbr .gt_last_grand_summary_row_top {
+#bdlcevosrk .gt_last_grand_summary_row_top {
 padding-top: 8px;
 padding-bottom: 8px;
 padding-left: 5px;
@@ -3547,10 +3548,10 @@ border-bottom-style: double;
 border-bottom-width: 6px;
 border-bottom-color: #D3D3D3;
 }
-#ufwvmiwtbr .gt_striped {
+#bdlcevosrk .gt_striped {
 background-color: rgba(128, 128, 128, 0.05);
 }
-#ufwvmiwtbr .gt_table_body {
+#bdlcevosrk .gt_table_body {
 border-top-style: solid;
 border-top-width: 2px;
 border-top-color: #D3D3D3;
@@ -3558,7 +3559,7 @@ border-bottom-style: solid;
 border-bottom-width: 2px;
 border-bottom-color: #D3D3D3;
 }
-#ufwvmiwtbr .gt_footnotes {
+#bdlcevosrk .gt_footnotes {
 color: #333333;
 background-color: #FFFFFF;
 border-bottom-style: none;
@@ -3571,7 +3572,7 @@ border-right-style: none;
 border-right-width: 2px;
 border-right-color: #D3D3D3;
 }
-#ufwvmiwtbr .gt_footnote {
+#bdlcevosrk .gt_footnote {
 margin: 0px;
 font-size: 90%;
 padding-top: 4px;
@@ -3579,7 +3580,7 @@ padding-bottom: 4px;
 padding-left: 5px;
 padding-right: 5px;
 }
-#ufwvmiwtbr .gt_sourcenotes {
+#bdlcevosrk .gt_sourcenotes {
 color: #333333;
 background-color: #FFFFFF;
 border-bottom-style: none;
@@ -3592,64 +3593,63 @@ border-right-style: none;
 border-right-width: 2px;
 border-right-color: #D3D3D3;
 }
-#ufwvmiwtbr .gt_sourcenote {
+#bdlcevosrk .gt_sourcenote {
 font-size: 90%;
 padding-top: 4px;
 padding-bottom: 4px;
 padding-left: 5px;
 padding-right: 5px;
 }
-#ufwvmiwtbr .gt_left {
+#bdlcevosrk .gt_left {
 text-align: left;
 }
-#ufwvmiwtbr .gt_center {
+#bdlcevosrk .gt_center {
 text-align: center;
 }
-#ufwvmiwtbr .gt_right {
+#bdlcevosrk .gt_right {
 text-align: right;
 font-variant-numeric: tabular-nums;
 }
-#ufwvmiwtbr .gt_font_normal {
+#bdlcevosrk .gt_font_normal {
 font-weight: normal;
 }
-#ufwvmiwtbr .gt_font_bold {
+#bdlcevosrk .gt_font_bold {
 font-weight: bold;
 }
-#ufwvmiwtbr .gt_font_italic {
+#bdlcevosrk .gt_font_italic {
 font-style: italic;
 }
-#ufwvmiwtbr .gt_super {
+#bdlcevosrk .gt_super {
 font-size: 65%;
 }
-#ufwvmiwtbr .gt_footnote_marks {
+#bdlcevosrk .gt_footnote_marks {
 font-size: 75%;
 vertical-align: 0.4em;
 position: initial;
 }
-#ufwvmiwtbr .gt_asterisk {
+#bdlcevosrk .gt_asterisk {
 font-size: 100%;
 vertical-align: 0;
 }
-#ufwvmiwtbr .gt_indent_1 {
+#bdlcevosrk .gt_indent_1 {
 text-indent: 5px;
 }
-#ufwvmiwtbr .gt_indent_2 {
+#bdlcevosrk .gt_indent_2 {
 text-indent: 10px;
 }
-#ufwvmiwtbr .gt_indent_3 {
+#bdlcevosrk .gt_indent_3 {
 text-indent: 15px;
 }
-#ufwvmiwtbr .gt_indent_4 {
+#bdlcevosrk .gt_indent_4 {
 text-indent: 20px;
 }
-#ufwvmiwtbr .gt_indent_5 {
+#bdlcevosrk .gt_indent_5 {
 text-indent: 25px;
 }
 </style>
 <table class="gt_table" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
   <thead>
     <tr class="gt_col_headings">
-      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="rgn.fix">rgn.fix</th>
       <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="Expectation">Expectation</th>
       <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="n">n</th>
       <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="subj">subj</th>
@@ -3660,128 +3660,112 @@ text-indent: 25px;
     </tr>
   </thead>
   <tbody class="gt_table_body">
-    <tr><td headers="rgn.fix" class="gt_row gt_right">-3</td>
-<td headers="expect" class="gt_row gt_center">expected</td>
+    <tr><td headers="expect" class="gt_row gt_center">expected</td>
 <td headers="n" class="gt_row gt_right">1383</td>
 <td headers="subj" class="gt_row gt_right">36</td>
 <td headers="rt" class="gt_row gt_right">750</td>
 <td headers="sd" class="gt_row gt_right">290</td>
 <td headers="stderr" class="gt_row gt_right">48</td>
 <td headers="rgn" class="gt_row gt_center">CW-3</td></tr>
-    <tr><td headers="rgn.fix" class="gt_row gt_right">-3</td>
-<td headers="expect" class="gt_row gt_center">unexpected</td>
+    <tr><td headers="expect" class="gt_row gt_center">unexpected</td>
 <td headers="n" class="gt_row gt_right">1380</td>
 <td headers="subj" class="gt_row gt_right">36</td>
 <td headers="rt" class="gt_row gt_right">760</td>
 <td headers="sd" class="gt_row gt_right">310</td>
 <td headers="stderr" class="gt_row gt_right">51</td>
 <td headers="rgn" class="gt_row gt_center">CW-3</td></tr>
-    <tr><td headers="rgn.fix" class="gt_row gt_right">-2</td>
-<td headers="expect" class="gt_row gt_center">expected</td>
+    <tr><td headers="expect" class="gt_row gt_center">expected</td>
 <td headers="n" class="gt_row gt_right">1376</td>
 <td headers="subj" class="gt_row gt_right">36</td>
 <td headers="rt" class="gt_row gt_right">730</td>
 <td headers="sd" class="gt_row gt_right">310</td>
 <td headers="stderr" class="gt_row gt_right">52</td>
 <td headers="rgn" class="gt_row gt_center">CW-2</td></tr>
-    <tr><td headers="rgn.fix" class="gt_row gt_right">-2</td>
-<td headers="expect" class="gt_row gt_center">unexpected</td>
+    <tr><td headers="expect" class="gt_row gt_center">unexpected</td>
 <td headers="n" class="gt_row gt_right">1380</td>
 <td headers="subj" class="gt_row gt_right">36</td>
 <td headers="rt" class="gt_row gt_right">740</td>
 <td headers="sd" class="gt_row gt_right">410</td>
 <td headers="stderr" class="gt_row gt_right">69</td>
 <td headers="rgn" class="gt_row gt_center">CW-2</td></tr>
-    <tr><td headers="rgn.fix" class="gt_row gt_right">-1</td>
-<td headers="expect" class="gt_row gt_center">expected</td>
+    <tr><td headers="expect" class="gt_row gt_center">expected</td>
 <td headers="n" class="gt_row gt_right">1375</td>
 <td headers="subj" class="gt_row gt_right">36</td>
 <td headers="rt" class="gt_row gt_right">760</td>
 <td headers="sd" class="gt_row gt_right">320</td>
 <td headers="stderr" class="gt_row gt_right">54</td>
 <td headers="rgn" class="gt_row gt_center">CW-1</td></tr>
-    <tr><td headers="rgn.fix" class="gt_row gt_right">-1</td>
-<td headers="expect" class="gt_row gt_center">unexpected</td>
+    <tr><td headers="expect" class="gt_row gt_center">unexpected</td>
 <td headers="n" class="gt_row gt_right">1389</td>
 <td headers="subj" class="gt_row gt_right">36</td>
 <td headers="rt" class="gt_row gt_right">750</td>
 <td headers="sd" class="gt_row gt_right">270</td>
 <td headers="stderr" class="gt_row gt_right">45</td>
 <td headers="rgn" class="gt_row gt_center">CW-1</td></tr>
-    <tr><td headers="rgn.fix" class="gt_row gt_right">0</td>
-<td headers="expect" class="gt_row gt_center">expected</td>
+    <tr><td headers="expect" class="gt_row gt_center">expected</td>
 <td headers="n" class="gt_row gt_right">1363</td>
 <td headers="subj" class="gt_row gt_right">36</td>
 <td headers="rt" class="gt_row gt_right">670</td>
 <td headers="sd" class="gt_row gt_right">220</td>
 <td headers="stderr" class="gt_row gt_right">37</td>
 <td headers="rgn" class="gt_row gt_center">art</td></tr>
-    <tr><td headers="rgn.fix" class="gt_row gt_right">0</td>
-<td headers="expect" class="gt_row gt_center">unexpected</td>
+    <tr><td headers="expect" class="gt_row gt_center">unexpected</td>
 <td headers="n" class="gt_row gt_right">1385</td>
 <td headers="subj" class="gt_row gt_right">36</td>
 <td headers="rt" class="gt_row gt_right">720</td>
 <td headers="sd" class="gt_row gt_right">340</td>
 <td headers="stderr" class="gt_row gt_right">57</td>
 <td headers="rgn" class="gt_row gt_center">art</td></tr>
-    <tr><td headers="rgn.fix" class="gt_row gt_right">1</td>
-<td headers="expect" class="gt_row gt_center">expected</td>
+    <tr><td headers="expect" class="gt_row gt_center">expected</td>
 <td headers="n" class="gt_row gt_right">1397</td>
 <td headers="subj" class="gt_row gt_right">36</td>
 <td headers="rt" class="gt_row gt_right">700</td>
 <td headers="sd" class="gt_row gt_right">260</td>
 <td headers="stderr" class="gt_row gt_right">43</td>
 <td headers="rgn" class="gt_row gt_center">n</td></tr>
-    <tr><td headers="rgn.fix" class="gt_row gt_right">1</td>
-<td headers="expect" class="gt_row gt_center">unexpected</td>
+    <tr><td headers="expect" class="gt_row gt_center">unexpected</td>
 <td headers="n" class="gt_row gt_right">1388</td>
 <td headers="subj" class="gt_row gt_right">36</td>
 <td headers="rt" class="gt_row gt_right">1,100</td>
 <td headers="sd" class="gt_row gt_right">540</td>
 <td headers="stderr" class="gt_row gt_right">90</td>
 <td headers="rgn" class="gt_row gt_center">n</td></tr>
-    <tr><td headers="rgn.fix" class="gt_row gt_right">2</td>
-<td headers="expect" class="gt_row gt_center">expected</td>
+    <tr><td headers="expect" class="gt_row gt_center">expected</td>
 <td headers="n" class="gt_row gt_right">1377</td>
 <td headers="subj" class="gt_row gt_right">36</td>
 <td headers="rt" class="gt_row gt_right">780</td>
 <td headers="sd" class="gt_row gt_right">330</td>
 <td headers="stderr" class="gt_row gt_right">55</td>
 <td headers="rgn" class="gt_row gt_center">CW+1</td></tr>
-    <tr><td headers="rgn.fix" class="gt_row gt_right">2</td>
-<td headers="expect" class="gt_row gt_center">unexpected</td>
+    <tr><td headers="expect" class="gt_row gt_center">unexpected</td>
 <td headers="n" class="gt_row gt_right">1389</td>
 <td headers="subj" class="gt_row gt_right">36</td>
 <td headers="rt" class="gt_row gt_right">860</td>
 <td headers="sd" class="gt_row gt_right">1,200</td>
 <td headers="stderr" class="gt_row gt_right">190</td>
 <td headers="rgn" class="gt_row gt_center">CW+1</td></tr>
-    <tr><td headers="rgn.fix" class="gt_row gt_right">3</td>
-<td headers="expect" class="gt_row gt_center">expected</td>
+    <tr><td headers="expect" class="gt_row gt_center">expected</td>
 <td headers="n" class="gt_row gt_right">1363</td>
 <td headers="subj" class="gt_row gt_right">36</td>
 <td headers="rt" class="gt_row gt_right">790</td>
 <td headers="sd" class="gt_row gt_right">320</td>
 <td headers="stderr" class="gt_row gt_right">54</td>
 <td headers="rgn" class="gt_row gt_center">CW+2</td></tr>
-    <tr><td headers="rgn.fix" class="gt_row gt_right">3</td>
-<td headers="expect" class="gt_row gt_center">unexpected</td>
+    <tr><td headers="expect" class="gt_row gt_center">unexpected</td>
 <td headers="n" class="gt_row gt_right">1349</td>
 <td headers="subj" class="gt_row gt_right">36</td>
 <td headers="rt" class="gt_row gt_right">790</td>
 <td headers="sd" class="gt_row gt_right">390</td>
 <td headers="stderr" class="gt_row gt_right">65</td>
 <td headers="rgn" class="gt_row gt_center">CW+2</td></tr>
-    <tr><td headers="rgn.fix" class="gt_row gt_right">4</td>
-<td headers="expect" class="gt_row gt_center">expected</td>
+    <tr><td headers="expect" class="gt_row gt_center">expected</td>
 <td headers="n" class="gt_row gt_right">1215</td>
 <td headers="subj" class="gt_row gt_right">36</td>
 <td headers="rt" class="gt_row gt_right">770</td>
 <td headers="sd" class="gt_row gt_right">300</td>
 <td headers="stderr" class="gt_row gt_right">49</td>
 <td headers="rgn" class="gt_row gt_center">CW+3</td></tr>
-    <tr><td headers="rgn.fix" class="gt_row gt_right">4</td>
-<td headers="expect" class="gt_row gt_center">unexpected</td>
+    <tr><td headers="expect" class="gt_row gt_center">unexpected</td>
 <td headers="n" class="gt_row gt_right">1215</td>
 <td headers="subj" class="gt_row gt_right">36</td>
 <td headers="rt" class="gt_row gt_right">790</td>

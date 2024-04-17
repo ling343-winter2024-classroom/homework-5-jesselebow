@@ -162,6 +162,7 @@ Here's a table with the same results:
 
 ```{r}
 rgn.rt.raw |>
+  select(-"rgn.fix") |>
 gt() |>
   cols_label(expect = "Expectation", rt = "Reaction Time (ms)", sd = "Standard Deviation", stderr = "Standard Error", rgn = "Region") |>
   fmt_number(columns = c(rt, sd, stderr), n_sigfig = 2)
