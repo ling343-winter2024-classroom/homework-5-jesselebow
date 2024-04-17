@@ -66,6 +66,8 @@ RespRT - Time taken (ms) to answer the question.
 
 The total number of participants is `r length(unique(d$Index))`.
 
+To be clear, one participant had an average correctness rate of about 50% (commensurate to random chance), and was thus removed from analysis. Later, two more with error rates two standard deviations above the group average were also removed, leaving an effective total of 37. 
+
 ## Removal of data
 
 Item #29 was removed due to a coding error, and words with error responses were removed as well:
